@@ -1,0 +1,30 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/Ananyajainhdjsj/devopsprojectcrossbrowservisualizer.git'
+            }
+        }
+
+        stage('Build Docker') {
+            steps {
+                sh 'docker build -t crossbrowser:latest .'
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                sh 'pytest tests/selenium/'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh 'docker-compose up -d'
+            }
+        }
+    }
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cross Browser Test Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<h2>Cross Browser Test Results</h2>
+
+<table border="1">
+<tr>
+    <th>Test</th>
+    <th>Browser</th>
+    <th>Status</th>
+    <th>Time</th>
+</tr>
+{% for r in results %}
+<tr>
+    <td>{{ r.test_name }}</td>
+    <td>{{ r.browser }}</td>
+    <td>{{ r.status }}</td>
+    <td>{{ r.execution_time }}</td>
+</tr>
+{% endfor %}
+</table>
+
+<canvas id="resultChart"></canvas>
+
+<script>
+const data = {
+    labels: ["Chrome", "Firefox", "Edge"],
+    datasets: [{
+        label: "Pass Count",
+        data: [
+            {{ [
+                results | selectattr('browser','equalto','chrome') | selectattr('status','equalto','pass') | list | length,
+                results | selectattr('browser','equalto','firefox') | selectattr('status','equalto','pass') | list | length,
+                results | selectattr('browser','equalto','edge') | selectattr('status','equalto','pass') | list | length
+            ] | tojson }}
+        ]
+    }]
+};
+
+new Chart(document.getElementById("resultChart"), {
+    type: "bar",
+    data: data
+});
+</script>
+</body>
+</html>

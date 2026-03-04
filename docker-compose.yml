@@ -20,3 +20,11 @@ services:
       POSTGRES_PASSWORD: devopspass
     ports:
       - "5432:5432"
+
+  edge:
+    image: selenium/standalone-edge:latest
+    ports:
+      - "4445:4444"
+    shm_size: 2gb
+
+  

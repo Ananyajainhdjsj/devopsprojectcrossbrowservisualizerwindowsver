@@ -11,12 +11,15 @@ def dashboard():
 
     chrome_pass = len([r for r in results if r.browser == "chrome" and r.status == "pass"])
     firefox_pass = len([r for r in results if r.browser == "firefox" and r.status == "pass"])
-
+    edge_pass = len([r for r in results if r.browser == "edge" and r.status == "pass"])
+    
     chrome_fail = len([r for r in results if r.browser == "chrome" and r.status == "fail"])
     firefox_fail = len([r for r in results if r.browser == "firefox" and r.status == "fail"])
-
+    edge_fail = len([r for r in results if r.browser == "edge" and r.status == "fail"])
+   
     chrome_time = sum([r.execution_time for r in results if r.browser == "chrome"])
     firefox_time = sum([r.execution_time for r in results if r.browser == "firefox"])
+    edge_time = sum([r.execution_time for r in results if r.browser == "edge"])
 
     total_tests = len(results)
 
@@ -25,10 +28,13 @@ def dashboard():
         results=results,
         chrome_pass=chrome_pass,
         firefox_pass=firefox_pass,
+        edge_pass=edge_pass,
         chrome_fail=chrome_fail,
         firefox_fail=firefox_fail,
+        edge_fail=edge_fail,
         chrome_time=chrome_time,
         firefox_time=firefox_time,
+        edge_time=edge_time,
         total_tests=total_tests
     )
 

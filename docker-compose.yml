@@ -21,10 +21,10 @@ services:
     ports:
       - "5432:5432"
 
-  edge:
-    image: selenium/standalone-edge:latest
+  firefox:
+    image: selenium/standalone-firefox:latest
     ports:
-      - "4445:4444"
+      - "4444:4444"
     shm_size: 2gb
-
-  
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

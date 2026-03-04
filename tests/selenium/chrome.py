@@ -11,31 +11,50 @@ from webdriver_manager.chrome import ChromeDriverManager
 def test_dashboard_chrome():
 
     options = Options()
-    options.binary_location = "/usr/bin/google-chrome"
     options.add_argument("--headless=new")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
 
     service = Service(ChromeDriverManager().install())
 
-    driver = webdriver.Chrome(service=service, options=options)
+    try:
+        driver = webdriver.Chrome(service=service, options=options)
 
-    start = time.time()
+        start = time.time()
 
-    driver.get("http://localhost:8080")
+        driver.get("http://localhost:8080")
 
-    assert "Cross Browser Test Results" in driver.page_source
+        assert "Cross Browser Test Results" in driver.page_source
 
-    end = time.time()
+        end = time.time()
 
-    driver.quit()
+        # Post success result
+        requests.post(
+            "http://localhost:8080/api/results",
+            json={
+                "test_name": "Dashboard Load Test",
+                "browser": "chrome",
+                "status": "pass",
+                "execution_time": end - start,
+            },
+        )
 
-    requests.post(
-        "http://localhost:8080/api/results",
-        json={
-            "test_name": "Dashboard Load Test",
-            "browser": "chrome",
-            "status": "pass",
-            "execution_time": end - start,
-        },
-    )
+    except Exception as e:
+        # Post failure result
+        try:
+            requests.post(
+                "http://localhost:8080/api/results",
+                json={
+                    "test_name": "Dashboard Load Test",
+                    "browser": "chrome",
+                    "status": "fail",
+                    "execution_time": 0,
+                },
+            )
+        except:
+            pass
+        raise e
+
+    finally:
+        if 'driver' in locals():
+            driver.quit()

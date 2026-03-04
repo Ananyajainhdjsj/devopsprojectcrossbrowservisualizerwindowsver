@@ -1,38 +1,23 @@
 import requests
 import time
-import os
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
-from selenium.webdriver.firefox.service import Service
-from webdriver_manager.firefox import GeckoDriverManager
 
 def test_dashboard_firefox():
     options = Options()
     options.add_argument("--headless")
     
-    # Try different Firefox binary paths for snap installation
-    firefox_paths = [
-        "/snap/firefox/current/usr/lib/firefox/firefox",  # Snap path
-        "/usr/bin/firefox",  # Regular installation
-        "/usr/lib/firefox/firefox",  # Alternative path
-    ]
-    
-    firefox_binary = None
-    for path in firefox_paths:
-        if os.path.exists(path):
-            firefox_binary = path
-            break
-    
-    if firefox_binary:
-        options.binary_location = firefox_binary
-    
     try:
-        service = Service(GeckoDriverManager().install())
-        driver = webdriver.Firefox(service=service, options=options)
+        # Connect to Firefox running in Docker on port 4444
+        driver = webdriver.Remote(
+            command_executor="http://localhost:4444/wd/hub",
+            options=options
+        )
         
         start = time.time()
-        driver.get("http://localhost:8080")
-        assert "Cross Browser" in driver.page_source
+        # Use host.docker.internal or localhost to access app from Docker container
+        driver.get("http://host.docker.internal:8080")
+        assert "Cross Browser Test Results" in driver.page_source
         end = time.time()
 
         # Post success result

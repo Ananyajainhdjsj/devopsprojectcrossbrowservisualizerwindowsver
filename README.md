@@ -16,8 +16,8 @@ Difficulty: Intermediate
 
 ---
 
-
-## Project Overview: ### README
+### README
+## Project Overview: 
 This README provides an overview of the project, setup instructions, technology stack, and project structure. 
 
 ### Problem Statement

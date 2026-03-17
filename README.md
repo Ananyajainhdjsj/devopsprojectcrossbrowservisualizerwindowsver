@@ -1,62 +1,4 @@
 # Cross-Browser Test Result Visualizer
-
-## Documentation
-
-- [ ] Comprehensive README
-- [ ] Technical documentation
-- [ ] User guide
-- [ ] API documentation (if applicable)
-
----
-
-### Comprehensive README
-This README provides an overview of the project, setup instructions, technology stack, and project structure. For deeper technical and user information, see the sections below.
-
-### Technical Documentation
-- **Architecture:**
-    - Flask backend serves REST API and dashboard.
-    - Selenium scripts run browser tests and POST results to backend.
-    - PostgreSQL stores test results.
-    - Jenkins pipeline automates test execution and deployment.
-- **Key Files:**
-    - `src/main/app.py`: Flask app entry point.
-    - `src/main/routes.py`: API endpoints and dashboard routes.
-    - `src/main/models.py`: SQLAlchemy models for test results.
-    - `tests/selenium/`: Selenium test scripts for Chrome, Firefox, Edge.
-    - `infrastructure/docker/Dockerfile`: Container build instructions.
-    - `pipelines/Jenkinsfile`: CI pipeline definition.
-- **Data Flow:**
-    1. Selenium test runs →
-    2. Result sent to Flask API →
-    3. Stored in PostgreSQL →
-    4. Dashboard visualizes results.
-
-### User Guide
-1. **Setup:**
-     - Install Docker, Python, and browsers.
-     - Clone repo and run `docker-compose up --build -d`.
-2. **Run Tests:**
-     - Activate virtualenv, install requirements.
-     - Run `pytest tests/selenium/chrome.py` or `firefox.py`.
-3. **View Dashboard:**
-     - Open `http://localhost:8080` in browser.
-4. **CI Pipeline:**
-     - Jenkinsfile automates test and deploy steps.
-
-### API Documentation
-#### Submit Test Result
-- **POST** `/api/results`
-    - **Body:** `{ "browser": "chrome", "status": "pass", "duration": 2.5 }`
-    - **Response:** `{ "success": true }`
-
-#### Get All Results
-- **GET** `/api/results`
-    - **Response:** `[ { "browser": "chrome", "status": "pass", "duration": 2.5 }, ... ]`
-
-#### Dashboard
-- **GET** `/`
-    - Renders dashboard.html with charts and statistics.
-
 ---
 
 Student Name: Ananya Jain  
@@ -65,8 +7,18 @@ Project Type: Jenkins & CI + Selenium Automation
 Difficulty: Intermediate  
 
 ---
+## Documentation
 
-## Project Overview
+- [ ] README
+- [ ] Technical documentation
+- [ ] User guide
+- [ ] API documentation 
+
+---
+
+
+## Project Overview: ### README
+This README provides an overview of the project, setup instructions, technology stack, and project structure. 
 
 ### Problem Statement
 
@@ -193,3 +145,52 @@ pytest tests/selenium/firefox.py
 When tests run, they automatically send results to:
 POST /api/results
 ```
+
+ 
+
+### Technical Documentation
+- **Architecture:**
+    - Flask backend serves REST API and dashboard.
+    - Selenium scripts run browser tests and POST results to backend.
+    - PostgreSQL stores test results.
+    - Jenkins pipeline automates test execution and deployment.
+- **Key Files:**
+    - `src/main/app.py`: Flask app entry point.
+    - `src/main/routes.py`: API endpoints and dashboard routes.
+    - `src/main/models.py`: SQLAlchemy models for test results.
+    - `tests/selenium/`: Selenium test scripts for Chrome, Firefox, Edge.
+    - `infrastructure/docker/Dockerfile`: Container build instructions.
+    - `pipelines/Jenkinsfile`: CI pipeline definition.
+- **Data Flow:**
+    1. Selenium test runs →
+    2. Result sent to Flask API →
+    3. Stored in PostgreSQL →
+    4. Dashboard visualizes results.
+
+### User Guide
+1. **Setup:**
+     - Install Docker, Python, and browsers.
+     - Clone repo and run `docker-compose up --build -d`.
+2. **Run Tests:**
+     - Activate virtualenv, install requirements.
+     - Run `pytest tests/selenium/chrome.py` or `firefox.py`.
+3. **View Dashboard:**
+     - Open `http://localhost:8080` in browser.
+4. **CI Pipeline:**
+     - Jenkinsfile automates test and deploy steps.
+
+### API Documentation
+#### Submit Test Result
+- **POST** `/api/results`
+    - **Body:** `{ "browser": "chrome", "status": "pass", "duration": 2.5 }`
+    - **Response:** `{ "success": true }`
+
+#### Get All Results
+- **GET** `/api/results`
+    - **Response:** `[ { "browser": "chrome", "status": "pass", "duration": 2.5 }, ... ]`
+
+#### Dashboard
+- **GET** `/`
+    - Renders dashboard.html with charts and statistics.
+
+

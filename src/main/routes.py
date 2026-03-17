@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, jsonify
 from models import TestResult
 from extensions import db
-
+#api endpoints and dashboard route
 main = Blueprint('main', __name__)
 
 @main.route("/")
